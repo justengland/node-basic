@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "delete-pipleine": "aws codepipeline delete-pipeline --name MyDemoProject",
+    "put-pipleine": "aws codepipeline put-pipeline-definition --pipeline-id MyDemoProject --pipeline-definition file://.codepipeline.json"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/justengland/node-basic/issues"
   },
-  "homepage": "https://github.com/justengland/node-basic"
+  "homepage": "https://github.com/justengland/node-basic",
+  "devDependencies": {
+    "gulp-cli": "^0.3.0"
+  }
 }

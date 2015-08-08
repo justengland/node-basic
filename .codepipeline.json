@@ -1,0 +1,93 @@
+{
+    "pipeline": {
+        "roleArn": "arn:aws:iam::958306274796:role/AWS-CodePipeline-Service", 
+        "stages": [
+            {
+                "name": "Source", 
+                "actions": [
+                    {
+                        "inputArtifacts": [], 
+                        "name": "Source", 
+                        "actionTypeId": {
+                            "category": "Source", 
+                            "owner": "ThirdParty", 
+                            "version": "1", 
+                            "provider": "GitHub"
+                        }, 
+                        "outputArtifacts": [
+                            {
+                                "name": "MyApp"
+                            }
+                        ], 
+                        "configuration": {
+                            "Owner": "justengland", 
+                            "Repo": "node-basic", 
+                            "Branch": "master", 
+                            "OAuthToken": "****"
+                        }, 
+                        "runOrder": 1
+                    }
+                ]
+            }, 
+            {
+                "name": "Build", 
+                "actions": [
+                    {
+                        "inputArtifacts": [
+                            {
+                                "name": "MyApp"
+                            }
+                        ], 
+                        "name": "Build", 
+                        "actionTypeId": {
+                            "category": "Build", 
+                            "owner": "Custom", 
+                            "version": "1", 
+                            "provider": "Jenkins-demo"
+                        }, 
+                        "outputArtifacts": [
+                            {
+                                "name": "MyAppBuild"
+                            }
+                        ], 
+                        "configuration": {
+                            "ProjectName": "MyDemoProject"
+                        }, 
+                        "runOrder": 1
+                    }
+                ]
+            }, 
+            {
+                "name": "Beta", 
+                "actions": [
+                    {
+                        "inputArtifacts": [
+                            {
+                                "name": "MyAppBuild"
+                            }
+                        ], 
+                        "name": "lambdaSite-dev", 
+                        "actionTypeId": {
+                            "category": "Deploy", 
+                            "owner": "AWS", 
+                            "version": "1", 
+                            "provider": "ElasticBeanstalk"
+                        }, 
+                        "outputArtifacts": [], 
+                        "configuration": {
+                            "ApplicationName": "lambda-site", 
+                            "EnvironmentName": "lambdaSite-dev"
+                        }, 
+                        "runOrder": 1
+                    }
+                ]
+            }
+        ], 
+        "artifactStore": {
+            "type": "S3", 
+            "location": "codepipeline-us-east-1-179703231202"
+        }, 
+        "name": "MyDemoProject", 
+        "version": 1
+    }
+}
